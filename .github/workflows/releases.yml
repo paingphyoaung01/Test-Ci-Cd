@@ -6,9 +6,9 @@ name: Build and Release
     tags:
       - v*
 jobs:
-  window-build:
+  build:
     name: TestCiCd
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2.4.0
       - name: Setup JDK
