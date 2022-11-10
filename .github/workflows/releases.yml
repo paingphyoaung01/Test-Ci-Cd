@@ -1,0 +1,27 @@
+name: Build and Release
+'on':
+  push:
+    branches:
+      - master
+    tags:
+      - v*
+jobs:
+  window-build:
+    name: TestCiCd
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2.4.0
+      - name: Setup JDK
+        uses: actions/setup-java@v2.5.0
+        with:
+          distribution: temurin
+          java-version: '11'
+      - name: build release
+        run: bash ./gradlew assembleDebug
+      - name: upload artifact to Firebase App Distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1.2.2
+        with:
+          appId: '1:666261533198:android:b3de358db655103aefc25f'
+          token:  '1//0gbGxyKBhB8miCgYIARAAGBASNwF-L9IrM5Dj-lI_FwTj13appDqEvsg1q-qAikee7qVG6hnkfU_GL5gtK7qt_kbwx0Xtj_lRUCo'
+          groups: project-testers
+          file: app/build/outputs/apk/debug/app-debug.apk
